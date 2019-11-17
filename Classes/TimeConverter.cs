@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using BerlinClock.Classes;
 
 namespace BerlinClock
 {
@@ -9,7 +6,21 @@ namespace BerlinClock
     {
         public string convertTime(string aTime)
         {
-            throw new NotImplementedException();
+            var secondsRow =
+                new EvenLightsRow(Constants.SecondsRowLights, Constants.SecondsDenominator, RowType.Second);
+            var hoursFirstRow = new QuotientLightsRow(Constants.HoursFirstRowLights, Constants.HoursDenominator, RowType.Hour);
+            var hoursSecondRow = new RemainderLightsRow(Constants.HoursSecondRowLights, Constants.HoursDenominator, RowType.Hour);
+            var minutesFirstRow = new QuotientLightsRow(Constants.MinutesFirstRowLights, Constants.MinutesDenominator, RowType.Minute);
+            var minutesSecondRow = new RemainderLightsRow(Constants.MinutesSecondRowLights, Constants.MinutesDenominator, RowType.Minute);
+
+            var builder = new ClockBuilder();
+            builder.AddRow(secondsRow);
+            builder.AddRow(hoursFirstRow);
+            builder.AddRow(hoursSecondRow);
+            builder.AddRow(minutesFirstRow);
+            builder.AddRow(minutesSecondRow);
+
+            return builder.BuildClock(aTime);
         }
     }
 }
